@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-08-27T20:53:08.711565" rpa="false" schemaversion="5">
+<suite id="s1" name="TestBlobTest" source="C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\BlogTest\TestBlobTest.robot">
+<test id="s1-t1" name="Caso de Teste 02: Ler um post" line="11">
+<kw name="Acessar a página do blog" owner="ResourceBlobTest">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:09.434409" level="INFO">Opening browser 'chrome' to base url 'https://robotizandotestes.blogspot.com/'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-08-27T20:53:09.433924" elapsed="4.308671"/>
+</kw>
+<kw name="Title Should Be" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:13.757105" level="INFO">Page title is 'Robotizando Testes'.</msg>
+<arg>${TITLE}</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="PASS" start="2025-08-27T20:53:13.743280" elapsed="0.014036"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:09.432453" elapsed="4.325085"/>
+</kw>
+<kw name="Acessar o post &quot;Season Running - Ep. 08: Executando seus testes no Docker&quot;" owner="ResourceBlobTest" source_name="Acessar o post &quot;${TEXTO_PESQUISA}&quot;">
+<kw name="Pesquisar por um post com &quot;${TEXTO_PESQUISA}&quot;" owner="ResourceBlobTest" source_name="Pesquisar por um post com &quot;${TEXTO_PESQUISA}&quot;">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${BTN_PESQUISAR}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-08-27T20:53:13.760025" elapsed="0.045139"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:13.805945" level="INFO">Clicking button 'css=button.search-expand.touch-icon-button'.</msg>
+<arg>${BTN_PESQUISAR}</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-08-27T20:53:13.805531" elapsed="0.178095"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:13.985646" level="INFO">Typing text 'Season Running - Ep. 08: Executando seus testes no Docker' into text field 'name=q'.</msg>
+<arg>${INPUT_PESQUISAR}</arg>
+<arg>${TEXTO_PESQUISA}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-08-27T20:53:13.984407" elapsed="0.418981"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:14.404301" level="INFO">Clicking element 'css=input.search-action.flat-button'.</msg>
+<arg>${SUBMIT_PESQUISAR}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-08-27T20:53:14.403813" elapsed="1.578847"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:13.759493" elapsed="2.223489"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:13.758597" elapsed="2.224508"/>
+</kw>
+<kw name="Conferir se a imagem do robô aparece" owner="ResourceBlobTest">
+<kw name="Page Should Contain Image" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:16.086389" level="INFO">Current page contains image 'xpath=//img[contains(@src,"R29vZ2xl")]'.</msg>
+<arg>${IMG_ROBO}</arg>
+<doc>Verifies image identified by ``locator`` is found from current page.</doc>
+<status status="PASS" start="2025-08-27T20:53:15.985016" elapsed="0.101619"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:15.984010" elapsed="0.102886"/>
+</kw>
+<kw name="Conferir se o texto &quot;Olááá robotizadores!&quot; aparece" owner="ResourceBlobTest" source_name="Conferir se o texto &quot;${TEXTO_DESEJADO}&quot; aparece">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:16.133979" level="INFO">Current page contains text 'Olááá robotizadores!'.</msg>
+<arg>${TEXTO_DESEJADO}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-08-27T20:53:16.088630" elapsed="0.045564"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:16.087851" elapsed="0.046641"/>
+</kw>
+<kw name="Conferir mensagem de pesquisa por &quot;Mostrando postagens que correspondem à pesquisa por Season Running - Ep. 08: Executando seus testes no Docker&quot;" owner="ResourceBlobTest" source_name="Conferir mensagem de pesquisa por &quot;${MSG_DESEJADA}&quot;">
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2025-08-27T20:53:16.169522" level="INFO">Current page contains text 'Mostrando postagens que correspondem à pesquisa por Season Running - Ep. 08: Executando seus testes no Docker'.</msg>
+<arg>${MSG_DESEJADA}</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2025-08-27T20:53:16.136522" elapsed="0.033293"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:16.135667" elapsed="0.034423"/>
+</kw>
+<kw name="Fechar o Navegador" owner="ResourceBlobTest">
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-08-27T20:53:16.171644" elapsed="2.295921"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:16.170855" elapsed="2.296970"/>
+</kw>
+<status status="PASS" start="2025-08-27T20:53:09.430387" elapsed="9.038088"/>
+</test>
+<status status="PASS" start="2025-08-27T20:53:08.715148" elapsed="9.754867"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="TestBlobTest" id="s1" pass="1" fail="0" skip="0">TestBlobTest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

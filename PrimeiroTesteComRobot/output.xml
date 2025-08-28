@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-08-27T14:36:40.869427" rpa="false" schemaversion="5">
+<suite id="s1" name="MeuTeste" source="C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\PrimeiroTesteComRobot\MeuTeste.robot">
+<test id="s1-t1" name="Caso numero 01" line="5">
+<kw name="Minha primeira keyword" owner="MeuResource">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${\n}Olá, Robot Framework está funcionando!!</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-08-27T14:36:40.911394" elapsed="0.000413"/>
+</kw>
+<status status="PASS" start="2025-08-27T14:36:40.910995" elapsed="0.001020"/>
+</kw>
+<status status="PASS" start="2025-08-27T14:36:40.910278" elapsed="0.002118"/>
+</test>
+<status status="PASS" start="2025-08-27T14:36:40.871548" elapsed="0.041964"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="MeuTeste" id="s1" pass="1" fail="0" skip="0">MeuTeste</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-08-27T14:36:40.908902" level="WARN">Error in file 'C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\PrimeiroTesteComRobot\MeuResource.robot' on line 1: Singular section headers like '*** keyword ***' are deprecated. Use plural format like '*** Keywords ***' instead.</msg>
+</errors>
+</robot>
