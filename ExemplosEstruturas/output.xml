@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-08-28T14:37:17.947807" rpa="false" schemaversion="5">
+<suite id="s1" name="UsandoLogs" source="C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\ExemplosEstruturas\UsandoLogs.robot">
+<test id="s1-t1" name="Caso de teste exemplo 01" line="12">
+<kw name="Usando LOG para mensagens">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-28T14:37:18.364888" level="INFO">Minha mensagem de LOG</msg>
+<arg>Minha mensagem de LOG</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.364757" elapsed="0.000187"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-08-28T14:37:18.365160" level="INFO">${VAR} = variável qualquer</msg>
+<var>${VAR}</var>
+<arg>variável qualquer</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.365052" elapsed="0.000134"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-28T14:37:18.365363" level="INFO">Posso logar uma variável qualquer no meio de um log</msg>
+<arg>Posso logar uma ${VAR} no meio de um log</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.365268" elapsed="0.000282"/>
+</kw>
+<status status="PASS" start="2025-08-28T14:37:18.364084" elapsed="0.001525"/>
+</kw>
+<kw name="Usando LOG Console">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Posso logar na saída do console</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.366391" elapsed="0.000371"/>
+</kw>
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2025-08-28T14:37:18.367411" level="INFO">Posso logar minha lista completa ['maça', 'banana', 'uva', 'abacaxi']</msg>
+<arg>Posso logar minha lista completa @{FRUTAS}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.367052" elapsed="0.000483"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-28T14:37:18.368584" level="INFO">Posso logar somente itens da minha lista maça - banana</msg>
+<arg>Posso logar somente itens da minha lista ${FRUTAS[0]} - ${FRUTAS[1]}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.367820" elapsed="0.000829"/>
+</kw>
+<status status="PASS" start="2025-08-28T14:37:18.366020" elapsed="0.002711"/>
+</kw>
+<kw name="Usando screen shots">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-08-28T14:37:18.369304" level="INFO">Nos testes web, podemos logar Screenshot com a SeleniumLibrary</msg>
+<arg>Nos testes web, podemos logar Screenshot com a SeleniumLibrary</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.369215" elapsed="0.000130"/>
+</kw>
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-08-28T14:37:18.369576" level="INFO">Opening browser 'chrome' to base url 'http://www.robotizandotestes.blogspot.com.br'.</msg>
+<arg>http://www.robotizandotestes.blogspot.com.br</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-08-28T14:37:18.369439" elapsed="7.760008"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2025-08-28T14:37:26.252899" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="nome_do_meuscreenshot.png"&gt;&lt;img src="nome_do_meuscreenshot.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>nome_do_meuscreenshot.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2025-08-28T14:37:26.129794" elapsed="0.123218"/>
+</kw>
+<status status="PASS" start="2025-08-28T14:37:18.369019" elapsed="7.884093"/>
+</kw>
+<status status="PASS" start="2025-08-28T14:37:18.363259" elapsed="7.890347"/>
+</test>
+<doc>Suíte de exmeplo didático para exemplificar o uso de LOGs nos testes
+Os LOGs são de grande utilidade, faça LOGs para analisar como seu teste está sendo executado nas entrelinhas
+Os LOGs te ajudam a achar falhas na automação dos seus testes
+Use LOGs sem moderação!!</doc>
+<status status="PASS" start="2025-08-28T14:37:17.949423" elapsed="8.305481"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="UsandoLogs" id="s1" pass="1" fail="0" skip="0">UsandoLogs</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-08-28T14:37:17.940570" level="WARN">Error in file 'C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\ExemplosEstruturas\UsandoLogs.robot' on line 8: Singular section headers like '*** Variable ***' are deprecated. Use plural format like '*** Variables ***' instead.</msg>
+<msg time="2025-08-28T14:37:17.941056" level="WARN">Error in file 'C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\ExemplosEstruturas\UsandoLogs.robot' on line 11: Singular section headers like '*** Test Case ***' are deprecated. Use plural format like '*** Test Cases ***' instead.</msg>
+</errors>
+</robot>
