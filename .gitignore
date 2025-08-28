@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Robot logs
+output.xml
+log.html
+report.html
