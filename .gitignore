@@ -6,6 +6,6 @@ __pycache__/
 .vscode/
 
 # Robot logs
-output.xml
-log.html
-report.html
+#output.xml
+#log.html
+#report.html
