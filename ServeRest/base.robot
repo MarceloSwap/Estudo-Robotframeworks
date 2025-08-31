@@ -1,10 +1,9 @@
 *** Settings ***
-Documentation    Arquivo simples para requisições http em APIs
+Documentation    Arquivo base para estudo do Robotframeworks para teste de APIs
 Library          RequestsLibrary
-
-*** Variables ***
-${nome_do_usuario}        UserTest001
-${senha_do_usuario}       user123
+Resource         ./usuarios_keywords.robot
+Resource         ./login_keywords.robot
+Resource         ./protudos_keywords.robot
 
 *** Test Cases ***
 Cenario: GET Todos os Usuarios 200
@@ -34,33 +33,21 @@ Cenario: DELETE Deletar Usuario 200
     DELETE Endpoint /usuarios
     Validar Status Code "200"
 
+Cenario: POST Realizar Login 200
+    [tags]    POSTLOGIN
+    Criar Sessao
+    POST Endpoint /login
+    Validar Status Code "200"
+
+Cenario: POST Cadastrar Produto 201
+    [tags]    POSTPRODUTO
+    Criar Sessao
+    POST Endpoint /produtos
+    Validar Status Code "201"
+
 *** Keywords ***
 Criar Sessao
     Create Session    serverest    https://compassuol.serverest.dev
-
-GET Endpoint /usuarios
-    ${response}    GET On Session    serverest    /usuarios
-    Set Global Variable    ${response}
-
-POST Endpoint /usuarios
-    &{payload}    Create Dictionary    nome=${nome_do_usuario}    email=usertest_001@mail.com.br    password=${senha_do_usuario}    administrador=true
-    ${response}    POST On Session    serverest    /usuarios    json=${payload}
-    Log To Console    Response: ${response.content}
-    ${json}    To Json    ${response.content}
-    ${id}    Set Variable    ${json["_id"]}
-    Set Global Variable    ${id}
-    Set Global Variable    ${response}
-
-PUT Endpoint /usuarios
-    &{payload}    Create Dictionary    nome=UserTest001Ed2    email=editado_001@mail.com.br    password=123    administrador=true
-    ${response}    PUT On Session    serverest    /usuarios/${id}    json=${payload}
-    Log To Console    Response: ${response.content}
-    Set Global Variable    ${response}
-
-DELETE Endpoint /usuarios
-    ${response}    DELETE On Session    serverest    /usuarios/${id}
-    Log To Console   Response: ${response.content}
-    Set Global Variable    ${response}
 
 Validar Status Code "${statuscode}"
     Should Be True    ${response.status_code} == ${statuscode}
@@ -83,3 +70,5 @@ Printar Conteudo Response
 
 #robot -d ./results .\base.robot - para escolher pra onde vai os resultados
 #robot -d ./results -i GET base.robot - executa por tag
+
+#Rodar o login: robot -d ./login_report -i POSTLOGIN base.robot
