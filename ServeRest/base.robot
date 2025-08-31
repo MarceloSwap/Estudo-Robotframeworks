@@ -3,6 +3,8 @@ Documentation    Arquivo simples para requisições http em APIs
 Library          RequestsLibrary
 
 *** Variables ***
+${nome_do_usuario}        UserTest001
+${senha_do_usuario}       user123
 
 *** Test Cases ***
 Cenario: GET Todos os Usuarios 200
@@ -41,7 +43,7 @@ GET Endpoint /usuarios
     Set Global Variable    ${response}
 
 POST Endpoint /usuarios
-    &{payload}    Create Dictionary    nome=UserTest002    email=usertest_001@mail.com.br    password=123    administrador=true
+    &{payload}    Create Dictionary    nome=${nome_do_usuario}    email=usertest_001@mail.com.br    password=${senha_do_usuario}    administrador=true
     ${response}    POST On Session    serverest    /usuarios    json=${payload}
     Log To Console    Response: ${response.content}
     ${json}    To Json    ${response.content}
