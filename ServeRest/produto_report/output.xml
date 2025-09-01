@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-08-31T11:26:50.864988" rpa="false" schemaversion="5">
+<suite id="s1" name="Base" source="C:\Users\marce\OneDrive\Documentos\PROJETOS\Estudo-Robotframeworks\ServeRest\base.robot">
+<test id="s1-t1" name="Cenario: POST Cadastrar Produto 201" line="42">
+<kw name="Criar Sessao">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-08-31T11:26:51.023526" level="INFO">Creating Session using : alias=serverest, url=https://compassuol.serverest.dev, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>serverest</arg>
+<arg>https://compassuol.serverest.dev</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-08-31T11:26:51.023414" elapsed="0.000281"/>
+</kw>
+<status status="PASS" start="2025-08-31T11:26:51.022957" elapsed="0.000808"/>
+</kw>
+<kw name="POST Endpoint /produtos" owner="protudos_keywords">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-08-31T11:26:51.024763" level="INFO">&amp;{header} = { Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzU2NjQ5MzIwLCJleHAiOjE3NTY2NDk5MjB9.05M-fva1zfh60pWIXVoYZzQIC3zy84DVD9B...</msg>
+<var>&amp;{header}</var>
+<arg>Authorization=${token_auth}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-08-31T11:26:51.024215" elapsed="0.000577"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-08-31T11:26:51.025169" level="INFO">&amp;{payload} = { nome=XP-PEN | preco=325 | descricao=Experiência natural com a caneta na tela: a tela usa a tecnologia de gravação AG | quantidade=5 }</msg>
+<var>&amp;{payload}</var>
+<arg>nome=${nome_produto}</arg>
+<arg>preco=${preco_produto}</arg>
+<arg>descricao=${descricao_produto}</arg>
+<arg>quantidade=${qtd_produto}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-08-31T11:26:51.024887" elapsed="0.000307"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-08-31T11:26:51.628446" level="INFO">POST Request : url=https://compassuol.serverest.dev/produtos 
+ path_url=/produtos 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzU2NjQ5MzIwLCJleHAiOjE3NTY2NDk5MjB9.05M-fva1zfh60pWIXVoYZzQIC3zy84DVD9BbZkXPbI0', 'Content-Length': '142', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=nome=XP-PEN&amp;preco=325&amp;descricao=Experi%C3%AAncia+natural+com+a+caneta+na+tela%3A+a+tela+usa+a+tecnologia+de+grava%C3%A7%C3%A3o+AG&amp;quantidade=5 
+ </msg>
+<msg time="2025-08-31T11:26:51.628575" level="INFO">POST Response : url=https://compassuol.serverest.dev/produtos 
+ status=401, reason=Unauthorized 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'f84e7100ee306d6f25ca8067a498d24f;o=1', 'date': 'Sun, 31 Aug 2025 14:26:53 GMT', 'server': 'Google Frontend', 'Content-Length': '103'} 
+ body={
+    "message": "Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"
+} 
+ </msg>
+<msg time="2025-08-31T11:26:51.628745" level="INFO">C:\Users\marce\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'compassuol.serverest.dev'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-08-31T11:26:51.629229" level="FAIL">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/produtos</msg>
+<var>${response}</var>
+<arg>serverest</arg>
+<arg>/produtos</arg>
+<arg>data=${payload}</arg>
+<arg>headers=${header}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="FAIL" start="2025-08-31T11:26:51.025287" elapsed="0.606628">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/produtos</status>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Response: ${response.content}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" start="2025-08-31T11:26:51.632135" elapsed="0.000025"/>
+</kw>
+<kw name="Set Global Variable" owner="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<status status="NOT RUN" start="2025-08-31T11:26:51.632258" elapsed="0.000017"/>
+</kw>
+<status status="FAIL" start="2025-08-31T11:26:51.024028" elapsed="0.608356">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/produtos</status>
+</kw>
+<kw name="Validar Status Code &quot;201&quot;" source_name="Validar Status Code &quot;${statuscode}&quot;">
+<status status="NOT RUN" start="2025-08-31T11:26:51.632786" elapsed="0.000029"/>
+</kw>
+<tag>POSTPRODUTO</tag>
+<status status="FAIL" start="2025-08-31T11:26:51.022113" elapsed="0.610983">HTTPError: 401 Client Error: Unauthorized for url: https://compassuol.serverest.dev/produtos</status>
+</test>
+<doc>Arquivo base para estudo do Robotframeworks para teste de APIs</doc>
+<status status="FAIL" start="2025-08-31T11:26:50.867024" elapsed="0.767551"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">POSTPRODUTO</stat>
+</tag>
+<suite>
+<stat name="Base" id="s1" pass="0" fail="1" skip="0">Base</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
