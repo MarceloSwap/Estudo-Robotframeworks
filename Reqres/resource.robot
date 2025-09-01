@@ -3,6 +3,7 @@ Library       RequestsLibrary
 Library       String
 Library       Collections
 
+*** Variables ***
 
 *** Keywords ***
 Cria um usuario na sessao
