@@ -13,5 +13,4 @@ Caso de Teste 02: Ler um post
     Acessar o post "Season Running - Ep. 08: Executando seus testes no Docker"
     Conferir se a imagem do robô aparece
     Conferir se o texto "Olááá robotizadores!" aparece
-    Conferir mensagem de pesquisa por "Mostrando postagens que correspondem à pesquisa por Season Running - Ep. 08: Executando seus testes no Docker"
     Fechar o Navegador

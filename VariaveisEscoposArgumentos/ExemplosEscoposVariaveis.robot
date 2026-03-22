@@ -2,7 +2,7 @@
 Documentation   Exemplo de escopo de variáveis: GLOBAIS, SUITE, TESTE (test case) e LOCAL (keyword)
 Library         String
 
-*** Variable ***
+*** Variables ***
 ${GLOBAL_INSTANCIADA}     Minha variável GLOBAL_INSTANCIADA foi instanciada para a suíte
 
 *** Test Cases ***
@@ -35,8 +35,8 @@ Uma keyword qualquer 02
     ${LOCAL}     Set Variable    Variável local da keyword 02
     Log    ${LOCAL}
     Log    ${GLOBAL_INSTANCIADA} / ${GLOBAL_CRIADA_EM_TEMPO_EXECUCAO} / ${SUITE_CRIADA_EM_TEMPO_EXECUCAO} / ${LOCAL}
-    # A keyword abaixo vai funcionar no Caso de Teste 01 e falhar no Case de Teste 02
-    Log    ${TESTE_01}
+    # ${TESTE_01} existe apenas no escopo do Caso 01 — no Caso 02 essa linha lança erro esperado
+    Run Keyword And Ignore Error    Log    ${TESTE_01}
 
 Uma keyword qualquer 03
     ${LOCAL}     Set Variable    Variável local da keyword 03

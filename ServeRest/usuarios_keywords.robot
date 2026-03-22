@@ -17,7 +17,7 @@ POST Endpoint /usuarios
     &{payload}    Create Dictionary    nome=UserTest000    email=usertest000@mail.com.br   password=test000serverest    administrador=true
     ${response}    POST On Session    serverest    /usuarios    json=${payload}
     Log To Console    Response: ${response.content}
-    ${json}    To Json    ${response.content}
+    ${json}    Set Variable    ${response.json()}
     ${id}    Set Variable    ${json["_id"]}
     Set Global Variable    ${id}
     Set Global Variable    ${response}

@@ -13,7 +13,7 @@ Criar Sessao
     ${headers}    Create Dictionary
     ...           accept=application/json
     ...           Content-Type=application/json
-    ...           x-api-key=reqres-free-v1
+    ...           x-api-key=%{REQRES_API_KEY}
     Create Session
     ...           alias=reqres_api
     ...           url=https://reqres.in/api
@@ -140,7 +140,7 @@ DELETE Endpoint /resource/id
     Criar Sessao
     ${response}=    DELETE On Session    
     ...    alias=reqres_api    
-    ...    url=/{resource}/${id}
+    ...    url=/${resource}/${id}
     RETURN    ${response}
 
 

@@ -5,4 +5,12 @@ __pycache__/
 # VS Code
 .vscode/
 
-# Robot logs
+# Robot Framework - arquivos gerados
+log.html
+output.xml
+report.html
+*.png
+results/
+reports/
+*_report/
+base_reports/

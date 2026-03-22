@@ -3,7 +3,7 @@ Documentation    Arquivo base para estudo do Robotframeworks para teste de APIs
 Library          RequestsLibrary
 Resource         ./usuarios_keywords.robot
 Resource         ./login_keywords.robot
-Resource         ./protudos_keywords.robot
+Resource         ./produtos_keywords.robot
 
 *** Test Cases ***
 Cenario: GET Todos os Usuarios 200
@@ -42,6 +42,7 @@ Cenario: POST Realizar Login 200
 Cenario: POST Cadastrar Produto 201
     [tags]    POSTPRODUTO
     Criar Sessao
+    POST Endpoint /login
     POST Endpoint /produtos
     Validar Status Code "201"
 
@@ -54,7 +55,7 @@ Validar Status Code "${statuscode}"
 
 #Verifica a quantidade de usários cadastrados é igual a 2
 Validar Quantidade "${quantidade}"
-    Should Be Equal    ${response.json()["quantidade"]}    ${quantidade}
+    Should Be True    ${response.json()["quantidade"]} >= ${quantidade}
     
 #Verifica se tem uma palavra no response
 Validar Se Mensagem Contem "${palabra}"

@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 7.3.2 (Python 3.13.7 on win32)" name="Generator">
+<meta content="Robot Framework 7.4.2 (Python 3.13.1 on win32)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all">
 :root {
@@ -116,15 +116,16 @@ select {
 #header {
     width: 65em;
     height: 3em;
-    margin: 20px 0 6px 0;
+    margin: 1em 0 0 0;
 }
 h1 {
     float: left;
-    margin: 0 0 0.5em 0;
+    margin: 0 0 1em 0;
     width: 75%;
 }
 h2 {
     clear: left;
+    margin: 1.5em 0 0.5em 0;
 }
 #generated {
     float: right;
@@ -168,7 +169,13 @@ h2 {
     background-color: var(--primary-color);
     border-radius: 3px;
 }
-.label.debug, .label.trace, .label.error, .label.keyword {
+/* https://stackoverflow.com/questions/75238633 */
+@supports (-moz-appearance: none) {
+    .label {
+        padding-top: 4px;
+    }
+}
+.label.debug, .label.trace, .label.error {
     letter-spacing: 0;
 }
 .label.pass, .label.fail, .label.error, .label.skip, .label.warn {
@@ -355,19 +362,6 @@ th.stats-col-graph:hover {
 [data-theme="light"] .dark-mode-icon {
     display: block;
 }
-@keyframes highlight {
-    0% {
-        background: var(--primary-color)
-    }
-    100% {
-        background: var(--target-color);
-    }
-}
-:target {
-    background: var(--target-color);
-    transition: background 0.3s;
-    animation: highlight 4s;
-}
 </style>
 <style media="all">
 /* Icons are from Open Iconic <https://useiconic.com/open/>.
@@ -384,36 +378,43 @@ th.stats-col-graph:hover {
     --elapsed-color: #999;
 }
 /* Containers */
-.suite, .test, #errors {
+.suite, .test, #errors, #errors .messages {
     border-color: #ccc; /* Fallback value */
     border-color: var(--secondary-color);
     border-width: 1px;
     border-style: solid;
-    padding: 0.3em 0.2em;
-    margin: 0.2em 0;
+    padding: 5px;
+    margin-top: 5px;
 }
 .test {
     border-style: dashed;
 }
-#errors, .messages {
+.messages {
     width: 100%;
     border-spacing: 0;
+    padding: 0 5px;
 }
 .children {
     display: none;
-    margin-left: 1.4em;
+    margin-left: 18px;
+    margin-top: 2px;
 }
-.suite, .test, .keyword {
-    margin-left: -0.2em;
+#errors .children {
+    margin-left: 22px;
 }
-#s1, .suite > .children > .keyword {
-    margin-left: 0;
+.suite, .test {
+    margin-left: -5px;
+}
+#s1, #errors {
+    margin: 0;
 }
 /* Suite, test and kw headers */
 .element-header {
+    display: flex;
+    align-items: center;
+    padding: 2px;
     border: 1px solid transparent;
     border-radius: 2px;
-    position: relative;
 }
 .element-header:hover {
     cursor: pointer;
@@ -423,17 +424,15 @@ th.stats-col-graph:hover {
     border-color: var(--secondary-color);
 }
 .element-header-toggle {
-    position: absolute;
-    left: 3px;
-    top: 5px;
+    margin: 0 4px 0 2px;
+    height: 11px;
+    width: 11px;
+    min-width: 11px;
+    background-size: 6px 6px;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAQAAABKxSfDAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0JChSkZz20AAAAGklEQVQI12NgQAKMDKzInP8IDhOqMk4G7AAANQwBE427PYUAAAAASUVORK5CYII=);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0wIDB2Mmg4di0yaC04eiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAzKSIgLz4KPC9zdmc+), none;
     filter: var(--icon-filter);
-    height: 10px;
-    width: 10px;
-    background-size: 6px 6px;
     border-color: #ccc; /* Fallback value */
     border-color: var(--icon-highlight);
     border-width: 1px;
@@ -441,67 +440,59 @@ th.stats-col-graph:hover {
     border-radius: 2px;
 }
 .closed > .element-header-toggle {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAQAAABKxSfDAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0JCDHdVYtxAAAAM0lEQVQI103MMQqAMBQFwVHyITaB3P+W1sKzSBC3mW6hRFw0pUB5DvF1bu9FN0RM3X/wAk98CUnvFTakAAAAAElFTkSuQmCC);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0zIDB2M2gtM3YyaDN2M2gydi0zaDN2LTJoLTN2LTNoLTJ6IiAvPgo8L3N2Zz4=), none;
 }
 .element-header:hover > .element-header-toggle {
     background-color: #ccc; /* Fallback value */
     background-color: var(--icon-highlight);
 }
-.element-header-right:hover ~ .element-header-toggle {
+.element-header-menu:hover ~ .element-header-toggle {
     background-color: transparent;
 }
-.element-header-left {
-    padding: 3px 80px 3px 20px;
-}
-.element-header-right {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 3px;
+.element-header-menu {
+    margin: 0 2px 0 4px;
     cursor: default;
 }
-.element-header .label {
-    margin-right: 0.5em;
+.name, .arg, .assign {
+    margin-left: 7px;
+    white-space: pre-wrap;
 }
 .name {
     font-weight: bold;
-    white-space: pre-wrap;
-}
-.arg, .assign {
-    white-space: pre-wrap;
 }
 .elapsed {
-    float: right;
+    margin-left: auto;
+    padding-left: 0.5em;
     color: #666; /* Fallback value */
     color: var(--elapsed-color);
-    padding-left: 1em;
+    font-size: 0.9em;
+}
+/* https://stackoverflow.com/questions/75238633 */
+@supports (-moz-appearance: none) {
+    .name, .arg, .assign, .elapsed {
+        padding-top: 3px;
+    }
 }
 .link {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAHlJREFUGJVtzrEJwmAQBtCn6ASuIKTIBhY2gmghBiJYB1udwk10B8FJbKMBcQFbtbkfJHrVwfu+4/idJR64Y9H7E3higj5O3S8Y44ApLnjhnXCNGhV2yNGggDJwiC02gavUbpDFvscRo4QdXOMKDHBufz3HLYKzNn4AbSkV3fncGQYAAAAASUVORK5CYII=);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik01Ljg4LjAzYy0uMTguMDEtLjM2LjAzLS41My4wOS0uMjcuMS0uNTMuMjUtLjc1LjQ3YS41LjUgMCAxIDAgLjY5LjY5Yy4xMS0uMTEuMjQtLjE3LjM4LS4yMi4zNS0uMTIuNzgtLjA3IDEuMDYuMjIuMzkuMzkuMzkgMS4wNCAwIDEuNDRsLTEuNSAxLjVjLS40NC40NC0uOC40OC0xLjA2LjQ3LS4yNi0uMDEtLjQxLS4xMy0uNDEtLjEzYS41LjUgMCAxIDAtLjUuODhzLjM0LjIyLjg0LjI1Yy41LjAzIDEuMi0uMTYgMS44MS0uNzhsMS41LTEuNWMuNzgtLjc4Ljc4LTIuMDQgMC0yLjgxLS4yOC0uMjgtLjYxLS40NS0uOTctLjUzLS4xOC0uMDQtLjM4LS4wNC0uNTYtLjAzem0tMiAyLjMxYy0uNS0uMDItMS4xOS4xNS0xLjc4Ljc1bC0xLjUgMS41Yy0uNzguNzgtLjc4IDIuMDQgMCAyLjgxLjU2LjU2IDEuMzYuNzIgMi4wNi40Ny4yNy0uMS41My0uMjUuNzUtLjQ3YS41LjUgMCAxIDAtLjY5LS42OWMtLjExLjExLS4yNC4xNy0uMzguMjItLjM1LjEyLS43OC4wNy0xLjA2LS4yMi0uMzktLjM5LS4zOS0xLjA0IDAtMS40NGwxLjUtMS41Yy40LS40Ljc1LS40NSAxLjAzLS40NC4yOC4wMS40Ny4wOS40Ny4wOWEuNS41IDAgMSAwIC40NC0uODhzLS4zNC0uMi0uODQtLjIyeiIKICAvPgo8L3N2Zz4=), none;
-    filter: var(--icon-filter);
 }
 .expand {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAADtJREFUGJVjYCACKDAwMByA0ljFDjAwMPxnYGB4ABVQgLL/Q+VQBB6gseGmIivCkERXhFUSWRFOSawAAEl7E3uv1iMcAAAAAElFTkSuQmCC);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0xLjUgMGwtMS41IDEuNSA0IDQgNC00LTEuNS0xLjUtMi41IDIuNS0yLjUtMi41eiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxKSIgLz4KPC9zdmc+), none;
-    filter: var(--icon-filter);
 }
 .collapse {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAC5JREFUGJVjYCARNEAxTsn/UIyhCFkSQxG6ThQ+C5IpjWhG1yNb4YDFTdjEMAEACi8Q++9Y9TAAAAAASUVORK5CYII=);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik00IDBsLTQgNCAxLjUgMS41IDIuNS0yLjUgMi41IDIuNSAxLjUtMS41LTQtNHoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMSkiIC8+Cjwvc3ZnPg==), none;
-    filter: var(--icon-filter);
 }
 .expand, .collapse, .link {
     float: left;
     display: block;
     visibility: hidden;
-    margin: 0 4px;
+    margin: 0 3px;
     height: 14px;
     width: 14px;
     background-size: 8px 8px;
     background-repeat: no-repeat;
     background-position: center;
+    filter: var(--icon-filter);
     border-color: #ccc; /* Fallback value */
     border-color: var(--icon-highlight);
     border-width: 1px;
@@ -519,23 +510,18 @@ th.stats-col-graph:hover {
     background-color: var(--icon-highlight);
 }
 /* Messages and errors */
+.message-row {
+    height: 20px;
+}
 .messages .time, .messages .message {
     font-family: monospace;
     font-size: 1.1em;
 }
-#errors .message {
-    font-family: monospace;
-    font-size: 1.2em;
-}
-.message-row {
-    height: 20px;
-}
-.time {
+.messages .time {
     width: 7.5em;
 }
-.error-time {
-    width: 11em;
-    font-size: 0.9em;
+#errors .time {
+    width: 12.5em;
     white-space: nowrap;
 }
 .level {
@@ -555,7 +541,6 @@ th.stats-col-graph:hover {
     background-position: center;
 }
 .message-row:hover .select-message div {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAQAAAD8fJRsAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0MOzhWKZQOAAAASUlEQVQY032PsRHAIAwDX9BkicD+W8UMEqegAQJWKZ/+3sLZJhFGQEZzNaIa4ibh66En867VNaIeoP5WppNuIGoAlOm3g5VC1AdYeQv1BZPRSgAAAABJRU5ErkJggg==);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0wIDB2MWg4di0xaC04em0wIDJ2MWg2di0xaC02em0wIDJ2MWg4di0xaC04em0wIDJ2MWg2di0xaC02eiIgLz4KPC9zdmc+), none;
     filter: var(--icon-filter);
     border-color: #ccc; /* Fallback value */
@@ -577,7 +562,6 @@ th.stats-col-graph:hover {
 .debug-message {
     display: table;
 }
-/* Metadata */
 .metadata {
     width: 100%;
     border-spacing: 0.2em;
@@ -596,6 +580,20 @@ th.stats-col-graph:hover {
 /* Custom styles for statistics */
 #total-stats tr:hover, #tag-stats tr:hover {
     cursor: default;
+}
+/* Target highlight */
+@keyframes highlight {
+    0% {
+        background: var(--primary-color)
+    }
+    100% {
+        background: var(--target-color);
+    }
+}
+:target {
+    background: var(--target-color);
+    transition: background 0.3s;
+    animation: highlight 4s;
 }
 </style>
 <style media="print">
@@ -741,7 +739,8 @@ function toggleElement(elementId, childrenNames) {
     children.toggle(100, '', function () {
         element.children('.element-header').toggleClass('closed');
     });
-    populateChildren(elementId, children, childrenNames);
+    if (childrenNames)
+        populateChildren(elementId, children, childrenNames);
 }
 function populateChildren(elementId, childElement, childrenNames) {
     if (!childElement.hasClass('populated')) {
@@ -1144,7 +1143,7 @@ window.model = (function () {
         kw.type = data.type;
         kw.template = 'keywordTemplate';
         kw.arguments = data.args;
-        kw.assign = data.assign + (data.assign ? ' =  ' : '');
+        kw.assign = data.assign;
         kw.tags = data.tags;
         kw.timeout = data.timeout;
         kw.populateKeywords = createIterablePopulator('Keyword');
@@ -1883,7 +1882,7 @@ function addStatistics() {
         '<th class="stats-col-elapsed">Elapsed</th>' +
         '<th class="stats-col-graph">Pass / Fail / Skip</th>';
     var statTable =
-        '<h2>{Test} Statistics</h2>' +
+        '<h2>Statistics</h2>' +
         '<table class="statistics" id="total-stats"><thead><tr>' +
         '<th class="stats-col-name">Total Statistics</th>' + statHeaders +
         '</tr></thead></table>' +
@@ -1893,7 +1892,7 @@ function addStatistics() {
         '<table class="statistics" id="suite-stats"><thead><tr>' +
         '<th class="stats-col-name">Statistics by Suite</th>' + statHeaders +
         '</tr></thead></table>';
-    $(testOrTask(statTable)).appendTo('#statistics-container');
+    $(statTable).appendTo('#statistics-container');
     util.map(['total', 'tag', 'suite'], addStatTable);
     addTooltipsToElapsedTimes();
     enableStatisticsSorter();
@@ -2074,25 +2073,25 @@ storage = function () {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,4,[],[1,0,2552],[],[[5,0,0,[6],[1,145,718],[[0,7,0,0,0,0,0,0,[1,146,1],[[0,8,9,0,10,11,0,0,[1,147,0],[[147,2,12]]]]],[0,13,14,0,0,0,0,0,[1,147,710],[[0,15,9,0,16,17,18,0,[1,147,709],[[856,2,19],[856,2,20],[856,2,21],[857,2,22]]],[0,23,24,0,25,18,0,0,[1,857,0],[[857,2,22]]]]],[0,26,0,0,0,0,0,0,[1,858,1],[[0,27,24,0,28,29,0,0,[1,858,1],[]]]],[0,30,0,0,0,0,0,0,[1,859,1],[[0,31,24,0,32,33,0,0,[1,860,0],[]]]],[0,34,0,0,0,0,0,0,[1,860,2],[[0,35,24,0,36,37,0,0,[1,861,1],[]],[0,35,24,0,36,38,0,0,[1,862,1],[]]]]]],[39,0,0,[40],[1,864,588],[[0,7,0,0,0,0,0,0,[1,865,1],[[0,8,9,0,10,11,0,0,[1,865,0],[[865,2,12]]]]],[0,41,14,0,0,0,0,0,[1,866,583],[[0,42,24,0,43,44,45,0,[1,866,1],[[867,2,46]]],[0,47,9,0,48,49,18,0,[1,867,578],[[1444,2,50],[1444,2,51],[1444,2,21],[1445,2,52]]],[0,35,24,0,36,53,0,0,[1,1445,1],[]],[0,54,9,0,55,56,57,0,[1,1446,1],[[1446,3,59],[1447,2,60],[1447,2,61],[1447,2,62]]],[0,63,24,0,64,65,66,0,[1,1448,0],[[1448,2,67]]],[0,23,24,0,25,66,0,0,[1,1448,0],[[1448,2,67]]],[0,23,24,0,25,18,0,0,[1,1448,0],[[1449,2,52]]]]],[0,68,0,0,0,0,0,0,[1,1449,1],[[0,27,24,0,28,29,0,0,[1,1450,1],[]]]],[0,69,0,0,0,0,0,0,[1,1451,1],[[0,70,24,0,71,72,0,0,[1,1451,0],[]]]]]],[73,0,0,[74],[1,1453,546],[[0,7,0,0,0,0,0,0,[1,1454,1],[[0,8,9,0,10,11,0,0,[1,1454,0],[[1454,2,12]]]]],[0,75,14,0,0,0,0,0,[1,1455,543],[[0,42,24,0,43,76,45,0,[1,1455,0],[[1455,2,77]]],[0,78,9,0,79,80,18,0,[1,1455,541],[[1995,2,81],[1995,2,82],[1996,2,21],[1996,2,22]]],[0,35,24,0,36,53,0,0,[1,1996,1],[]],[0,23,24,0,25,18,0,0,[1,1997,0],[[1998,2,22]]]]],[0,26,0,0,0,0,0,0,[1,1998,1],[[0,27,24,0,28,29,0,0,[1,1998,1],[]]]]]],[83,0,0,[84],[1,2000,551],[[0,7,0,0,0,0,0,0,[1,2001,1],[[0,8,9,0,10,11,0,0,[1,2001,0],[[2001,2,12]]]]],[0,85,14,0,0,0,0,0,[1,2002,548],[[0,86,9,0,87,88,18,0,[1,2002,546],[[2548,2,89],[2548,2,90],[2548,2,21],[2548,2,22]]],[0,35,24,0,36,53,0,0,[1,2549,1],[]],[0,23,24,0,25,18,0,0,[1,2550,0],[[2550,2,22]]]]],[0,26,0,0,0,0,0,0,[1,2550,1],[[0,27,24,0,28,29,0,0,[1,2550,1],[]]]]]]],[],[4,4,0,0]];
+window.output["suite"] = [1,2,3,4,[],[1,0,4389],[],[[5,0,0,[6],[1,327,754],[[0,7,0,0,0,0,0,0,[1,328,1],[[0,8,9,0,10,11,0,0,[1,329,0],[[329,2,12]]]]],[0,13,14,0,0,0,0,0,[1,330,734],[[0,15,9,0,16,17,18,0,[1,331,732],[[1061,2,19],[1061,2,20],[1061,2,21],[1063,2,22]]],[0,23,24,0,25,18,0,0,[1,1063,1],[[1064,2,22]]]]],[0,26,0,0,0,0,0,0,[1,1065,4],[[0,27,24,0,28,29,0,0,[1,1066,3],[]]]],[0,30,0,0,0,0,0,0,[1,1070,4],[[0,27,24,0,28,31,0,0,[1,1071,3],[]]]],[0,32,0,0,0,0,0,0,[1,1075,6],[[0,33,24,0,34,35,0,0,[1,1076,3],[]],[0,33,24,0,34,36,0,0,[1,1079,2],[]]]]]],[37,0,0,[38],[1,1083,621],[[0,7,0,0,0,0,0,0,[1,1084,2],[[0,8,9,0,10,11,0,0,[1,1085,1],[[1085,2,12]]]]],[0,39,14,0,0,0,0,0,[1,1086,610],[[0,40,24,0,41,42,43,0,[1,1087,2],[[1089,2,44]]],[0,45,9,0,46,47,18,0,[1,1089,597],[[1685,2,48],[1685,2,49],[1685,2,21],[1686,2,50]]],[0,33,24,0,34,51,0,0,[1,1687,2],[]],[0,52,24,0,53,35,54,0,[1,1690,2],[[1691,2,55]]],[0,52,24,0,53,56,57,0,[1,1692,2],[[1693,2,58]]],[0,23,24,0,25,57,0,0,[1,1694,1],[[1695,2,58]]],[0,23,24,0,25,18,0,0,[1,1695,1],[[1696,2,50]]]]],[0,59,0,0,0,0,0,0,[1,1697,4],[[0,27,24,0,28,29,0,0,[1,1698,3],[]]]],[0,60,0,0,0,0,0,0,[1,1701,3],[[0,61,24,0,62,63,0,0,[1,1702,2],[]]]]]],[64,0,0,[65],[1,1706,600],[[0,7,0,0,0,0,0,0,[1,1707,2],[[0,8,9,0,10,11,0,0,[1,1708,1],[[1708,2,12]]]]],[0,66,14,0,0,0,0,0,[1,1709,591],[[0,40,24,0,41,67,43,0,[1,1710,1],[[1711,2,68]]],[0,69,9,0,70,71,18,0,[1,1712,585],[[2295,2,72],[2295,2,73],[2295,2,21],[2297,2,22]]],[0,33,24,0,34,51,0,0,[1,2297,2],[]],[0,23,24,0,25,18,0,0,[1,2300,1],[[2301,2,22]]]]],[0,26,0,0,0,0,0,0,[1,2302,4],[[0,27,24,0,28,29,0,0,[1,2303,3],[]]]]]],[74,0,0,[75],[1,2308,597],[[0,7,0,0,0,0,0,0,[1,2309,1],[[0,8,9,0,10,11,0,0,[1,2309,1],[[2310,2,12]]]]],[0,76,14,0,0,0,0,0,[1,2311,590],[[0,77,9,0,78,79,18,0,[1,2311,585],[[2894,2,80],[2895,2,81],[2895,2,21],[2896,2,22]]],[0,33,24,0,34,51,0,0,[1,2896,2],[]],[0,23,24,0,25,18,0,0,[1,2899,1],[[2900,2,22]]]]],[0,26,0,0,0,0,0,0,[1,2901,4],[[0,27,24,0,28,29,0,0,[1,2902,3],[]]]]]],[82,0,0,[83],[1,2906,607],[[0,7,0,0,0,0,0,0,[1,2907,3],[[0,8,9,0,10,11,0,0,[1,2908,2],[[2908,2,12]]]]],[0,84,85,0,0,0,0,0,[1,2911,598],[[0,40,24,0,41,86,43,0,[1,2911,1],[[2913,2,87]]],[0,45,9,0,46,88,18,0,[1,2913,588],[[3499,2,89],[3499,2,90],[3500,2,21],[3501,2,22]]],[0,33,24,0,34,51,0,0,[1,3501,2],[]],[0,52,24,0,53,91,92,0,[1,3504,2],[[3506,2,93]]],[0,23,24,0,25,92,0,0,[1,3506,1],[[3507,2,93]]],[0,23,24,0,25,18,0,0,[1,3507,1],[[3508,2,22]]]]],[0,26,0,0,0,0,0,0,[1,3509,4],[[0,27,24,0,28,29,0,0,[1,3510,3],[]]]]]],[94,0,0,[95],[1,3515,872],[[0,7,0,0,0,0,0,0,[1,3516,1],[[0,8,9,0,10,11,0,0,[1,3516,1],[[3517,2,12]]]]],[0,84,85,0,0,0,0,0,[1,3518,613],[[0,40,24,0,41,86,43,0,[1,3519,1],[[3520,2,87]]],[0,45,9,0,46,88,18,0,[1,3520,603],[[4122,2,89],[4122,2,96],[4122,2,21],[4123,2,22]]],[0,33,24,0,34,51,0,0,[1,4124,2],[]],[0,52,24,0,53,91,92,0,[1,4127,2],[[4128,2,97]]],[0,23,24,0,25,92,0,0,[1,4129,1],[[4130,2,97]]],[0,23,24,0,25,18,0,0,[1,4130,1],[[4131,2,22]]]]],[0,98,99,0,0,0,0,0,[1,4132,250],[[0,40,24,0,41,100,101,0,[1,4133,1],[[4134,2,102]]],[0,40,24,0,41,103,43,0,[1,4134,1],[[4135,2,104]]],[0,45,9,0,46,105,18,0,[1,4136,242],[[4376,2,106],[4377,2,107],[4377,2,21],[4378,2,50]]],[0,33,24,0,34,51,0,0,[1,4378,2],[]],[0,23,24,0,25,18,0,0,[1,4381,1],[[4382,2,50]]]]],[0,59,0,0,0,0,0,0,[1,4383,4],[[0,27,24,0,28,29,0,0,[1,4384,3],[]]]]]]],[],[6,6,0,0]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
 </script>
 <script type="text/javascript">
-window.output["strings"] = window.output["strings"].concat(["*","*Base","*C:\\Users\\marce\\OneDrive\\Documentos\\PROJETOS\\Estudo-Robotframeworks\\ServeRest\\base.robot","*../base.robot","*<p>Arquivo base para estudo do Robotframeworks para teste de APIs\x3c/p>","*Cenario: GET Todos os Usuarios 200","*GET","*Criar Sessao","*Create Session","*RequestsLibrary","*<p>Create Session: create a HTTP session to a server\x3c/p>","*serverest    <a href=\"https://compassuol.serverest.dev\">https://compassuol.serverest.dev\x3c/a>","eNptjEEKwjAQRa8yBwit60JWgks3nmBsv20wzYTMpCji3bVUXPXvHv/xjgVsIY10gWqQRFVX6ohjYPWKsqBAzVEt0U9mWbu27WXOrFolNn+jGbA4msADivrX29HeepF7wPZztcmfJcGRhRlS7Ue5yGOVNvrmw+3pTxwV+9EB1zr6A30APtZBSQ==","*GET Endpoint /usuarios","*usuarios_keywords","*GET On Session","*<p>Sends a GET request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios","*${response}","*GET Request : url=https://compassuol.serverest.dev/usuarios \n path_url=/usuarios \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} \n body=None \n ","eNplkttuGjEQhu95CosbpIqF3SUcClqpUZugqEnThtxUVVUN9iy49Xo2PnAoyrvXXkKUpL6y5v8888945hf37A5tTdoimzJvVLF2rrbTfp9TVYO1nlTPotmgQet6Ajd9bz0YSZa1mHXgvC3yNO0yg2BJF7efQ3yNINDY4tABztHahJN2hlQCStE2ISNXUnemrPOu02WdXSK0TWqDJTq+PrFRprI8AqWBChOqnQxOo7I4v7m4vbuaX32JgHVGcpc4Azr0YlxikXsj3T6iFewSWGGRDYfD4DSdMam58gIXfvmJKpAh49EFbbUiEC/raKIa9VGPxlCHMvsaXzNWy5PTnY2tkEMe9ShnM1aRwGKpiP+J0Ms8EYC6VpJD5Pu/wwxnjK/BWHSFd2UyeSquyIvYIcejkZ1r3ua8HI3GkzEXeT6YvM/LrBQlirMzDoMhjGZUZDGBANfUWnjdZYOMnfsVy9N8yLJ8OkingzGb39w3o2z+OqJzopVCdmkauyKKH5+cX6NeuXWE8uGg8xh+fEliXxxaLJz2gwftpAgr0J6yrHsMnrYmhH40kXgOz7eG0VTFJ+1Lr0ATE8AWUm2g3X2NYfgzFbmy4T48QC8s61sqLu+WjIigC7uLbwEQldQyrA4IMg1l/H/QL9kkSP3Of/2e8mX1bV1f/M3az9Rjc/vZikP4B5Om/4k=","eNqtjzFvAjEMhff+CosOdCFXdEPVEyChdmglBlRAXbKYxNxFzSVp7KO6f98g6D/o5Gfr+dN7L40+MGXWPWZDep3SKwrqTTTo9TbHNmPPejtKF8Nt1PNab9xRsxOaJTRf2BLrIXvvjrU2MQQy4mJIMXqVxmb++PzUwHtgMkOmD/oeiOUTc3ChbeAQzpTdyZGFt/1+u4N8NYBjOFKxQI+WQCJ0sVynJvYJmYfCLrnLb/EqS+epgrW1F7+hLAVoUAiu7CJLnguRJcfQ+hHQnh2TVbAjamCB0GU6LSedSOKmqm5tVCa00pGNhpWLFYXKFyxLVf4xGLKzgUt91Unv78Xz7Ofaiyerf0MtKlzdAfyt6iIefgHnv6JY","*${response} = &lt;Response [200]&gt;","*Set Global Variable","*BuiltIn","*<p>Makes a variable available globally in all tests and suites.\x3c/p>","*Validar Status Code &quot;200&quot;","*Should Be True","*<p>Fails if the given condition is not true.\x3c/p>","*${response.status_code} == ${statuscode}","*Validar Quantidade &quot;${1}&quot;","*Should Be Equal","*<p>Fails if the given objects are unequal.\x3c/p>","*${response.json()[\"quantidade\"]}    ${quantidade}","*Printar Conteudo Response","*Log To Console","*<p>Logs the given message to the console.\x3c/p>","*${response.json()}","*${response.json()[\"usuarios\"][0][\"nome\"]}","*Cenario: POST Cadastrar Usuario 201","*POST","*POST Endpoint /usuarios","*Create Dictionary","*<p>Creates and returns a dictionary based on the given <code>items\x3c/code>.\x3c/p>","*nome=${username}    email=${email}    password=${password}    administrador=true","*&amp;{payload}","*&amp;{payload} = { nome=UserTest000 | email=usertest000@mail.com.br | password=test000serverest | administrador=true }","*POST On Session","*<p>Sends a POST request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios    json=${payload}","eNpNkMtKxDAUhvc+RcgmMPQ2I7ooFBzEnaBoXUvaHNtom8TkpDIO8+7mOIPO9vu/c318eG7ZE3xGCMhqFv3UjIgu1GXZ29nJEKKdigB+AZ+UQsFSxhCl1zawC+Ykjq9UdA5HkAp8aPbiJRXm2wEMipoJt8PRmtwfp4VyU1xuiiuRMbHte3CY35neKm0Gkodv7TKm4G2SCP8ORatyReDWGgM9amsIfgC4XE56gVOGaWp+D2bAkfL1+vo8aHcOCEvnJt1L6lK+h9TqkA7orNo1ndhzY2fgNeN0R5t2rqqKZ4zDLPVEPCaOR35DrEg/KzpPDr3uy3pF2kn5+yLlUs3a6IBeKut/JR+BH0Qa/wN1jYTa","eNpVkk9v2zAMxe/5FEIuBoa48Z+lzRz4EGRbUGBdh6YYdhsYiU60yaIrSm2yYt99UtICnS8+vJ/IRz5+u93cizvkgSyjaERwpt17P3AznUrqB2AOZC4Y3SM6ZH+h8HEaOIDTxGIk2IMP3FZFOREOgcm2q/j3qKK4R1DouH3OQEpkziVZ78jkYAw95eT0TtusEdm7bCKyQ64s54PDDr3cv7JJpq47A52DHnMavI52k7JZ3ny6vbteX39NAHunpc+9AxsHcj5nlMFpf0xoD4ccdtiWs9msKopiIbSVJijchO1H6kHHimcX9GQNgXrbxxINaM96MoY2tjkO+D/DVr86PXAahTzKpCe5XIieFLZbQ/J3gt7WSQAMg9ESEj/9FRe5EHIPjtG3wXf5/KW5oaDShBLPRg4+vZ110NX1vMJ6Vm1lCWX5vijr6vLqA3SXJZ5MqZjKaWfBTkRdimXYiaqoZqKsmrpo6iuxvrk/rfEUdkLXRDuD4rM7WVVJXL24/oJ25/cJmlfZ3xj2ltSxfR6J+I37GHbc9bgR4xUoiLlQug6j/4AiEe9KcEgHQePJ+cFPrRK87le9+d79kEt6WD7oy/EoVf4HF8XbTA==","*${response} = &lt;Response [201]&gt;","*Response: ${response.content}","*To Json","*<p><b>DEPRECATED\x3c/b> Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.\x3c/p>","*${response.content}","*${json}","*s1-t2-k2-k4","*Keyword 'RequestsLibrary.To Json' is deprecated. Please use ${resp.json()} instead. Have a look at the improved HTML output as pretty printing replacement.","*To JSON using : content={\n    \"message\": \"Cadastro realizado com sucesso\",\n    \"_id\": \"GmCmlVfXcAoqAqi6\"\n} ","*To JSON using : pretty_print=False ","*${json} = {'message': 'Cadastro realizado com sucesso', '_id': 'GmCmlVfXcAoqAqi6'}","*Set Variable","*<p>Returns the given values which can then be assigned to a variables.\x3c/p>","*${json[\"_id\"]}","*${id}","*${id} = GmCmlVfXcAoqAqi6","*Validar Status Code &quot;201&quot;","*Validar Se Mensagem Contem &quot;sucesso&quot;","*Should Contain","*<p>Fails if <code>container\x3c/code> does not contain <code>item\x3c/code> one or more times.\x3c/p>","*${response.json()[\"message\"]}    ${palabra}","*Cenario: PUT Editar Usuario 200","*PUT","*PUT Endpoint /usuarios","*nome=UserTest001    email=editado_001@mail.com.br    password=123    administrador=true","*&amp;{payload} = { nome=UserTest001 | email=editado_001@mail.com.br | password=123 | administrador=true }","*PUT On Session","*<p>Sends a PUT request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios/${id}    json=${payload}","*PUT Request : url=https://compassuol.serverest.dev/usuarios/GmCmlVfXcAoqAqi6 \n path_url=/usuarios/GmCmlVfXcAoqAqi6 \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '103', 'Content-Type': 'application/json'} \n body=b'{\"nome\": \"UserTest001\", \"email\": \"editado_001@mail.com.br\", \"password\": \"123\", \"administrador\": \"true\"}' \n ","*PUT Response : url=https://compassuol.serverest.dev/usuarios/GmCmlVfXcAoqAqi6 \n status=200, reason=OK \n headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': '50b44c536377c4b62b580ed79ed88fb0', 'date': 'Sun, 31 Aug 2025 12:30:38 GMT', 'server': 'Google Frontend', 'Content-Length': '50'} \n body={\n    \"message\": \"Registro alterado com sucesso\"\n} \n ","*Cenario: DELETE Deletar Usuario 200","*DELETE","*DELETE Endpoint /usuarios","*DELETE On Session","*<p>Sends a DELETE request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios/${id}","*DELETE Request : url=https://compassuol.serverest.dev/usuarios/GmCmlVfXcAoqAqi6 \n path_url=/usuarios/GmCmlVfXcAoqAqi6 \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} \n body=None \n ","*DELETE Response : url=https://compassuol.serverest.dev/usuarios/GmCmlVfXcAoqAqi6 \n status=200, reason=OK \n headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': '1ba71633dff2d45cb24ff85e58947334', 'date': 'Sun, 31 Aug 2025 12:30:39 GMT', 'server': 'Google Frontend', 'Content-Length': '51'} \n body={\n    \"message\": \"Registro excluído com sucesso\"\n} \n "]);
+window.output["strings"] = window.output["strings"].concat(["*","*Base","*C:\\Git\\Estudo-Robotframeworks\\Estudo-Robotframeworks\\ServeRest\\base.robot","*../base.robot","*<p>Arquivo base para estudo do Robotframeworks para teste de APIs\x3c/p>","*Cenario: GET Todos os Usuarios 200","*GET","*Criar Sessao","*Create Session","*RequestsLibrary","*<p>Create Session: create a HTTP session to a server\x3c/p>","*serverest    <a href=\"https://compassuol.serverest.dev\">https://compassuol.serverest.dev\x3c/a>","eNptjEEKwjAQRa8yBwit60JWgks3nmBsv20wzYTMpCji3bVUXPXvHv/xjgVsIY10gWqQRFVX6ohjYPWKsqBAzVEt0U9mWbu27WXOrFolNn+jGbA4msADivrX29HeepF7wPZztcmfJcGRhRlS7Ue5yGOVNvrmw+3pTxwV+9EB1zr6A30APtZBSQ==","*GET Endpoint /usuarios","*usuarios_keywords","*GET On Session","*<p>Sends a GET request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios","*${response}","*GET Request : url=https://compassuol.serverest.dev/usuarios \n path_url=/usuarios \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} \n body=None \n ","eNq1lWFv4jgQhr/3V1h8QToRmhhCEyqkQo+yXcrBlbLd7el0GmKH+Ejs1HYoXLX//eywXXX3xBWWu3yyZt545sm8dgb9O3RLVS64oqiNCpl2Eq1z1T49jUSWg1KFSOuKyhWVVOk6oavTQhUgmVDoBCkNulAd7Lo1JCkowTvjoYknFAiVqvNchSiiSjmR4FqK1IE0FU+OkGzBeLWNqj9Va6i6dghXTi5pTHWUvGhtWsTxVhBLyKgjcs1MpzYz7Y7649vrwfUvVqC0ZJF2tARuWKR2FI0KyfTGSjNYO7CgHc/3fdOpe44Yj9KC0Gkx/1lkwMyO2y7EE08FkNd1uBA55du8bYxyU2aT0281irOXTtfKoghNI5u3ae8cZYLQzjwV0dKKXu9jBZDnKYvA6k//NN/wHEUJSEV1p9CxE3wpnoqCWMKIbhtZa/tugBshmc+buEliElPfxW7YbAGmOGz4nhuci45nNyCgy1rTgtcQxmgEEmEXt5AXtL1m2/PRYHRXfspy1lY6EGKRUnQly3aJTV5+6fyG8oVOSrgQ+9XPZuRzQTad5xNknspjAVwzYjxQaaOwtg2+2MaEfisj9nn+uio1XGT2lcpVkQIXiACasnQFldq3MmqGllpdXOouHqFu3Pq9yrr3SUhihdqYl34vAJIxzox3gAhZqmTxD9EfrNzALdbF5JMbzbNfk7z/l1f5qvpce4vm0hwMRCgqm0BnO2kmjC/rA8kyqi4SoW34LS4PN5rHYF0O/e5tECShHA17EzE5BGtmrNLCDbyTpzAC3AzwHvOZmDXGofcmSwyp2gkzHgkd3T9skg/vH4ayf9CMWGSttJOlLyE8u9hAIsT/7rXB7CyJgks6XjVvBu5k9eNea+zk6fJlwQnji4vFPj47mum+9+DGmyDFIb+h/vzTIUzmkjZ1IjSNkowRvZNpANL8Bpb+fkjoGJzkajYPJgDBZrYIm/TqEBy73oXQo1pvcHM/AkV5AsdQMPXuOngU79j9CsfGbT9utNZOotsNcK+138mxt5nfOgtCzz0G67GLe13vjj8Nw3krWB3ktfdgqqAPIl1mwHdC3VFYAK93ZWY6EnwRNP7LY/Rvd5was9FMfZz1fBkvux/1K7Zy9fuJ/Rn/DZu6itg=","eNqtj0FPAkEMhe/+igYPeGFWwsG4QRKiB00wIQLxMpcyU3Ynzk7XaRfDv3cI+A889bV5/fLec213QlnsO2ZHke2y719Q0a7YYbTrzE3GTuz6pC2n65hNZ3YV9laC0qRH94UNiR1yjGE/s45TIqeBU88cTX+qp/ePDzW8JSE3ZPqg74FEPzGnkJoadulIORwCeXjdbtcbyBcDBIE9FQt06AmUoeVyHTvuehQZCrskL7/FazwdxwaW3p/9jrIWoEMluLCLLHnORNHMqYknQH8MQt7AhqiGOUKb6fA0alV7qavq2sZkQq8teXZiAleUqliwolX5x+TITwYp9U2rXbzVKJOfSy8ZLf4NNa9wcQPwt5qzuPsFKhKjEw==","*${response} = &lt;Response [200]&gt;","*Set Global Variable","*BuiltIn","*<p>Makes a variable available globally in all tests and suites.\x3c/p>","*Validar Status Code &quot;200&quot;","*Should Be True","*<p>Fails if the given condition is not true.\x3c/p>","*${response.status_code} == ${statuscode}","*Validar Quantidade &quot;${1}&quot;","*${response.json()[\"quantidade\"]} &gt;= ${quantidade}","*Printar Conteudo Response","*Log To Console","*<p>Logs the given message to the console.\x3c/p>","*${response.json()}","*${response.json()[\"usuarios\"][0][\"nome\"]}","*Cenario: POST Cadastrar Usuario 201","*POST","*POST Endpoint /usuarios","*Create Dictionary","*<p>Creates and returns a dictionary based on the given <code>items\x3c/code>.\x3c/p>","*nome=UserTest000    email=usertest000@mail.com.br    password=test000serverest    administrador=true","*&amp;{payload}","*&amp;{payload} = { nome=UserTest000 | email=usertest000@mail.com.br | password=test000serverest | administrador=true }","*POST On Session","*<p>Sends a POST request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios    json=${payload}","eNpNkMtKxDAUhvc+RcgmMPQ2I7ooFBzEnaBoXUvaHNtom8TkpDIO8+7mOIPO9vu/c318eG7ZE3xGCMhqFv3UjIgu1GXZ29nJEKKdigB+AZ+UQsFSxhCl1zawC+Ykjq9UdA5HkAp8aPbiJRXm2wEMipoJt8PRmtwfp4VyU1xuiiuRMbHte3CY35neKm0Gkodv7TKm4G2SCP8ORatyReDWGgM9amsIfgC4XE56gVOGaWp+D2bAkfL1+vo8aHcOCEvnJt1L6lK+h9TqkA7orNo1ndhzY2fgNeN0R5t2rqqKZ4zDLPVEPCaOR35DrEg/KzpPDr3uy3pF2kn5+yLlUs3a6IBeKut/JR+BH0Qa/wN1jYTa","eNpVkk1r20AQhu/+FYsvgmLFkmrLqowOwWlNaNyEOBB6KuPdkb3takfsR2I39L93V04g0WVB7zMz73zc3W4f2D3anrRFVjNvVHNwrrf1dMqp68FaT+rConlCg9ZdCHyaeuvBSLJsxKwD521TZPmEGQRLulmF16EI4gFBoLHNSwKco7UpJ+0MqRSUoueUjNxLndQs+ZRMWHJMhbZpb7BFxw9vbJSpbc9Aa6DDlHong92obC83X2/vr9fXPyJgnZHcpc6ADg0Zl1rk3kh3imgHxxT22OTz+bzIsmzJpObKC9z63RV1IEPGswt61opAvK+jiXrUZz0aQx3KnHr8yFgt35webWyFHPKoRzlfso4ENjtF/E+E3ueJAPS9khwiP/0dBrlk/ADGomu8a9PqtbgiL2KHHM9Gji7GVlXe7jIxyxe8WhSwyD6XUPHwawFZOYMyBouwlWFmXk9YUbANGFZkRcnyqs5ndV6y9eZhGOOw7IiuifYK2TczWBVRXL26vkG9d4ehdpH8C8vekTg1LyMWvnEXlh1mPa7ZeAUCwl4oXoeSf0EQC3fFrI8HQePJOeCXFAO88t+Lq8fd5c3dl8Xq52w8ipn/AxL12jY=","*${response} = &lt;Response [201]&gt;","*Response: ${response.content}","*Set Variable","*<p>Returns the given values which can then be assigned to a variables.\x3c/p>","*${json}","*${json} = {'message': 'Cadastro realizado com sucesso', '_id': 'CCuK2DWbALP97CY4'}","*${json[\"_id\"]}","*${id}","*${id} = CCuK2DWbALP97CY4","*Validar Status Code &quot;201&quot;","*Validar Se Mensagem Contem &quot;sucesso&quot;","*Should Contain","*<p>Fails if <code>container\x3c/code> does not contain <code>item\x3c/code> one or more times.\x3c/p>","*${response.json()[\"message\"]}    ${palabra}","*Cenario: PUT Editar Usuario 200","*PUT","*PUT Endpoint /usuarios","*nome=UserTest001    email=editado_001@mail.com.br    password=123    administrador=true","*&amp;{payload} = { nome=UserTest001 | email=editado_001@mail.com.br | password=123 | administrador=true }","*PUT On Session","*<p>Sends a PUT request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios/${id}    json=${payload}","*PUT Request : url=https://compassuol.serverest.dev/usuarios/CCuK2DWbALP97CY4 \n path_url=/usuarios/CCuK2DWbALP97CY4 \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '103', 'Content-Type': 'application/json'} \n body=b'{\"nome\": \"UserTest001\", \"email\": \"editado_001@mail.com.br\", \"password\": \"123\", \"administrador\": \"true\"}' \n ","*PUT Response : url=https://compassuol.serverest.dev/usuarios/CCuK2DWbALP97CY4 \n status=200, reason=OK \n headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': '9aa90930ff79bbe51a81689e0227a23a', 'date': 'Sun, 22 Mar 2026 18:14:16 GMT', 'server': 'Google Frontend', 'Content-Length': '50'} \n body={\n    \"message\": \"Registro alterado com sucesso\"\n} \n ","*Cenario: DELETE Deletar Usuario 200","*DELETE","*DELETE Endpoint /usuarios","*DELETE On Session","*<p>Sends a DELETE request on a previously created HTTP Session.\x3c/p>","*serverest    /usuarios/${id}","*DELETE Request : url=https://compassuol.serverest.dev/usuarios/CCuK2DWbALP97CY4 \n path_url=/usuarios/CCuK2DWbALP97CY4 \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} \n body=None \n ","*DELETE Response : url=https://compassuol.serverest.dev/usuarios/CCuK2DWbALP97CY4 \n status=200, reason=OK \n headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'c0dd230878754430f545e1d97099c1d2', 'date': 'Sun, 22 Mar 2026 18:14:17 GMT', 'server': 'Google Frontend', 'Content-Length': '51'} \n body={\n    \"message\": \"Registro excluído com sucesso\"\n} \n ","*Cenario: POST Realizar Login 200","*POSTLOGIN","*POST Endpoint /login","*login_keywords","*email=${email_para_loggin}    password=${password_para_login}","*&amp;{payload} = { email=fulano@qa.com | password=teste }","*serverest    /login    data=${payload}","*POST Request : url=https://compassuol.serverest.dev/login \n path_url=/login \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '36', 'Content-Type': 'application/x-www-form-urlencoded'} \n body=email=fulano%40qa.com&amp;password=teste \n ","*POST Response : url=https://compassuol.serverest.dev/login \n status=200, reason=OK \n headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': 'fac33f621a34ab5df1c1c3b0ae0f3509', 'date': 'Sun, 22 Mar 2026 18:14:17 GMT', 'server': 'Google Frontend', 'Content-Length': '265'} \n body={\n    \"message\": \"Login realizado com sucesso\",\n    \"authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzc0MjAzMjU3LCJleHAiOjE3NzQyMDM4NTd9.dAyyl4a-QUqoe8qb8F_7uf0mlyZiOMz_z8mO4FZcOqI\"\n} \n ","*${response.json()[\"authorization\"]}","*${TOKEN_LOGIN}","*${TOKEN_LOGIN} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzc0MjAzMjU3LCJleHAiOjE3NzQyMDM4NTd9.dAyyl4a-QUqoe8qb8F_7uf0mlyZiOMz_z8mO4FZcOqI","*Cenario: POST Cadastrar Produto 201","*POSTPRODUTO","*POST Response : url=https://compassuol.serverest.dev/login \n status=200, reason=OK \n headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'x-cloud-trace-context': '960d982f3a968f4093417737cfb807a0', 'date': 'Sun, 22 Mar 2026 18:14:18 GMT', 'server': 'Google Frontend', 'Content-Length': '265'} \n body={\n    \"message\": \"Login realizado com sucesso\",\n    \"authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzc0MjAzMjU4LCJleHAiOjE3NzQyMDM4NTh9.9q9YyHWb-rB-jqaYxlSvk-Zq5uTSzSGqNT6mbdYaJ2s\"\n} \n ","*${TOKEN_LOGIN} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzc0MjAzMjU4LCJleHAiOjE3NzQyMDM4NTh9.9q9YyHWb-rB-jqaYxlSvk-Zq5uTSzSGqNT6mbdYaJ2s","*POST Endpoint /produtos","*produtos_keywords","*Authorization=${TOKEN_LOGIN}","*&amp;{header}","*&amp;{header} = { Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzc0MjAzMjU4LCJleHAiOjE3NzQyMDM4NTh9.9q9YyHWb-rB-jqaYxlSvk-Zq5uTSzSGqNT6...","eNrLy89NtVWpzgNS8QVF+SmlJfm1CkBQUJSanA+UANMoMimpxclFmcmJIFk4G0VFYWliXklmSmIKyOTCkhS4JACw2yjo","*&amp;{payload} = { nome=XP-PEN | preco=325 | descricao=Experiência natural com a caneta na tela: a tela usa a tecnologia de gravação AG | quantidade=5 }","*serverest    /produtos    json=${payload}    headers=${header}","*POST Request : url=https://compassuol.serverest.dev/produtos \n path_url=/produtos \n headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzc0MjAzMjU4LCJleHAiOjE3NzQyMDM4NTh9.9q9YyHWb-rB-jqaYxlSvk-Zq5uTSzSGqNT6mbdYaJ2s', 'Content-Length': '165', 'Content-Type': 'application/json'} \n body=b'{\"nome\": \"XP-PEN\", \"preco\": \"325\", \"descricao\": \"Experi\\\\u00eancia natural com a caneta na tela: a tela usa a tecnologia de grava\\\\u00e7\\\\u00e3o AG\", \"quantidade\": \"5\"}' \n ","eNpVkk1v2kAQhu/8ihUXSxUOtgmYGvkQkRZFCk0VcsolWnbHeNv1jrUfARr1v3cHJ1Lqy8p6n5l55+Pnw+6JPYLr0ThgFQtW1633vaumU4Fdz50LqK8c2Few4PyVhNdpb1EGj46NmPPcB1cXWT5hFrhDU6/j60FGsQUuwbr6LeFCgHOpQOMt6pRrjccUrTook1Qs+ZJMWHJKpXFpb6EBL9oPlmRsmgFoLO8gxd6raJeU3c3228Pj3ebuBwHOWyV86i03sSHrUwciWOXPhHb8lPID1Pl8Pi+yLFsxZYQOEnZhf4sdVzHj4AKPRiOXn+sYxB7MoJMxMLHMuYf/GWfUh9OTo1bQgyCd5HzFOpRQ7zWK3wR9zkMA73utBCd++isOcsVEy60DXwffpMv34hqDpA4FDEZOnmLLUpbyOi8XM5mXOedfZ/GnnJWi2S8zyBcULONWLjMLZsKKgm25ZUVWLFi+rPLrKl+yzfbpMsbLsgndIB40sO/2YlWSuH53fQ/m4FuClkXyNy57j/Jcv41Y/MZdXHac9bhi4zWXPO4F6Tq0+sMlsnhXzAU6CBxPhoAXJQlGNbtf3Njj7rYVz8fZdjyizP8A6Lraww=="]);
 </script>
 <script type="text/javascript">
-window.output["stats"] = [[{"elapsed":"00:00:02","fail":0,"label":"All Tests","pass":4,"skip":0}],[{"elapsed":"00:00:01","fail":0,"label":"DELETE","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"GET","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"POST","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"PUT","pass":1,"skip":0}],[{"elapsed":"00:00:03","fail":0,"id":"s1","label":"Base","name":"Base","pass":4,"skip":0}]];
+window.output["stats"] = [[{"elapsed":"00:00:04","fail":0,"label":"All Tests","pass":6,"skip":0}],[{"elapsed":"00:00:01","fail":0,"label":"DELETE","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"GET","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"POST","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"POSTLOGIN","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"POSTPRODUTO","pass":1,"skip":0},{"elapsed":"00:00:01","fail":0,"label":"PUT","pass":1,"skip":0}],[{"elapsed":"00:00:04","fail":0,"id":"s1","label":"Base","name":"Base","pass":6,"skip":0}]];
 </script>
 <script type="text/javascript">
-window.output["errors"] = [[1446,3,59,58]];
+window.output["errors"] = [];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1756643434269;
+window.output["baseMillis"] = 1774203154773;
 </script>
 <script type="text/javascript">
-window.output["generated"] = 2576;
+window.output["generated"] = 4479;
 </script>
 <script type="text/javascript">
 window.output["expand_keywords"] = null;
@@ -2154,8 +2153,9 @@ function addErrors() {
     var errors = window.testdata.errorIterator();
     if (errors.hasNext()) {
         $.tmpl('errorHeaderTemplate').appendTo($('body'));
-        drawErrorsRecursively(errors, $('#errors'));
+        drawErrorsRecursively(errors, $('#errors .messages'));
     }
+    toggleElement('errors');
 }
 
 function drawErrorsRecursively(errors, target) {
@@ -2189,7 +2189,7 @@ function makeElementVisible(id) {
 }
 
 function addExecutionLog(main) {
-    $('body').append($(testOrTask('<h2>{Test} Execution Log</h2>')),
+    $('body').append('<h2>Execution Log</h2>',
                      $.tmpl('suiteTemplate', main));
 }
 </script>
@@ -2234,20 +2234,31 @@ function addExecutionLog(main) {
 </script>
 
 <script type="text/x-jquery-tmpl" id="errorHeaderTemplate">
-  <h2>{{= testOrTask('{Test}')}} Execution Errors</h2>
-  <table id="errors"></table>
+  <h2>Execution Errors</h2>
+  <div id="errors">
+    <div class="element-header closed" onclick="toggleElement('errors')">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label error">ERRORS</div>
+      <div class="name">Errors and warnings during execution</div>
+    </div>
+    <div class="children">
+      <table class="messages"></table>
+    </div>
+  </div>
 </script>
 
 <script type="text/x-jquery-tmpl" id="errorTemplate">
   <tr id="${id}" class="message-row">
-    <td class="error-time">
+    <td class="time">
       {{if link}}
       <a onclick="makeElementVisible('${link}')" href="#${link}" title="Link to details">${date} ${time}</a>
       {{else}}
       ${date} ${time}
       {{/if}}
     </td>
-    <td class="${level.toLowerCase()} level"><span class="label ${level.toLowerCase()}">${level}</span></td>
+    <td class="${level.toLowerCase()} level">
+      <span class="label ${level.toLowerCase()}">${level}</span>
+    </td>
     <td class="message">{{html text}}</td>
     <td class="select-message" onclick="javascript:selectMessage('${id}')" title="Select message text">
       <div></div>
@@ -2257,18 +2268,18 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="suiteTemplate">
   <div id="${id}" class="suite">
-    <div class="element-header closed" onclick="toggleSuite('${id}')">
-      <div class="element-header-left" title="SUITE  {{html name}}  [${status}]">
-        <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label ${status.toLowerCase()}">SUITE</span>
-        <span class="name">{{html name}}</span>
-      </div>
-      <div class="element-header-right" onclick="stopPropagation(event)" title="">
+    <div class="element-header closed" onclick="toggleSuite('${id}')"
+         title="SUITE  {{html name}}  [${status}]">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label ${status.toLowerCase()}">SUITE</div>
+      <div class="name">{{html name}}</div>
+      <div class="elapsed" title="Elapsed time">${times.elapsedTime}</div>
+      <div class="element-header-menu" onclick="stopPropagation(event)" title="">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this suite" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" onclick="makeElementVisible('${id}')"
+           title="Link to this suite" href="#${id}"></a>
       </div>
-      <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
     <div class="children">
       <table class="metadata">
@@ -2319,18 +2330,18 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="testTemplate">
   <div id="${id}" class="test">
-    <div class="element-header closed" onclick="toggleTest('${id}')">
-      <div class="element-header-left" title="{{= testOrTask('{TEST}')}}  {{html name}}  [${status}]">
-        <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label ${status.toLowerCase()}">{{= testOrTask('{TEST}')}}</span>
-        <span class="name">{{html name}}</span>
-      </div>
-      <div class="element-header-right" onclick="stopPropagation(event)" title="">
+    <div class="element-header closed" onclick="toggleTest('${id}')"
+         title="{{= testOrTask('{TEST}')}}  {{html name}}  [${status}]">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label ${status.toLowerCase()}">{{= testOrTask('{TEST}')}}</div>
+      <div class="name">{{html name}}</div>
+      <div class="elapsed" title="Elapsed time">${times.elapsedTime}</div>
+      <div class="element-header-menu" onclick="stopPropagation(event)" title="">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this {{= testOrTask('{test}')}}" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" href="#${id}" onclick="makeElementVisible('${id}')"
+           title="Link to this {{= testOrTask('{test}')}}"></a>
       </div>
-      <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
     <div class="children">
       <table class="metadata">
@@ -2377,21 +2388,20 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="keywordTemplate">
   <div id="${id}" class="keyword">
-    <div class="element-header closed" onclick="toggleKeyword('${id}')">
-      <div class="element-header-left" title="${type}  {{if name}}{{html fullName}}  {{/if}}[${status}]">
-        <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label ${status.toLowerCase()}">${type}</span>
-        <span class="assign">{{html assign}}</span>
-        <span class="name"><span class="parent-name">{{html libname}}{{if libname}} . {{/if}}</span>{{html name}}</span>
-        &nbsp;
-        <span class="arg">{{html arguments}}</span>
-      </div>
-      <div class="element-header-right" onclick="stopPropagation(event)">
+    <div class="element-header closed" onclick="toggleKeyword('${id}')"
+         title="${type}  {{if name}}{{html fullName}}  {{/if}}[${status}]">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label ${status.toLowerCase()}">${type}</div>
+      {{if assign}}<div class="assign">{{html assign}}&nbsp;=</div>{{/if}}
+      <div class="name">{{if libname}}<span class="parent-name">{{html libname}} . </span>{{/if}}{{html name}}</div>
+      <div class="arg">{{html arguments}}</div>
+      <div class="elapsed" title="Elapsed time">${times.elapsedTime}</div>
+      <div class="element-header-menu" onclick="stopPropagation(event)">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this item" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" onclick="makeElementVisible('${id}')"
+           title="Link to this item" href="#${id}"></a>
       </div>
-      <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
     <div class="children">
       <table class="metadata keyword-metadata">
